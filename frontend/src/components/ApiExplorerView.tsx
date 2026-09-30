@@ -82,7 +82,7 @@ export const ApiExplorerView: React.FC = () => {
           </div>
 
           <a
-            href="http://127.0.0.1:8000/docs"
+            href="/api/docs"
             target="_blank"
             rel="noreferrer"
             className="flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-surface-card hover:bg-surface-hover border border-surface-border text-xs font-mono text-cyan-300"

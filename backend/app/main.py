@@ -97,10 +97,14 @@ async def lifespan(app: FastAPI):
     yield
     # Shutdown
 
+from fastapi.responses import RedirectResponse
+
 app = FastAPI(
     title="CHERUBIM API — Trust-Aware Real-Time Airfare Intelligence & Price Index",
     description="Statistical data ingestion, quality validation, and APIx index construction for MoSPI CPI Augmentation.",
     version="1.0.0",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
     lifespan=lifespan
 )
 
@@ -115,7 +119,12 @@ app.add_middleware(
 
 app.include_router(router)
 
+@app.get("/docs", include_in_schema=False)
+def redirect_docs():
+    return RedirectResponse(url="/api/docs")
+
 @app.get("/")
+@app.get("/api")
 def root():
     return {
         "system": "CHERUBIM",
@@ -124,6 +133,6 @@ def root():
         "index_name": "APIx — Airfare Price Index",
         "status": "OPERATIONAL",
         "mode": "DEMO MODE — REPRODUCIBLE PROTOTYPE DATA",
-        "api_docs": "/docs",
+        "api_docs": "/api/docs",
         "philosophy": "COLLECT -> TRUST -> INDEX -> EXPLAIN"
     }

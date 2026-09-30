@@ -1,9 +1,20 @@
 import sqlite3
 import os
+import shutil
 from pathlib import Path
 from typing import Any, List, Dict, Optional
 
-DB_PATH = Path(__file__).resolve().parent.parent / "cherubim.db"
+_DEFAULT_DB = Path(__file__).resolve().parent.parent / "cherubim.db"
+
+# On Vercel, the file system is read-only except /tmp.
+# Copy the seeded SQLite database into /tmp so the app can read/write data seamlessly.
+if os.environ.get("VERCEL"):
+    _TMP_DB = Path("/tmp/cherubim.db")
+    if not _TMP_DB.exists() and _DEFAULT_DB.exists():
+        shutil.copy2(_DEFAULT_DB, _TMP_DB)
+    DB_PATH = _TMP_DB
+else:
+    DB_PATH = _DEFAULT_DB
 
 def get_connection() -> sqlite3.Connection:
     conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
