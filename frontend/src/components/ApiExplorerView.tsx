@@ -82,13 +82,13 @@ export const ApiExplorerView: React.FC = () => {
           </div>
 
           <a
-            href="http://127.0.0.1:8000/docs"
+            href="/api/health"
             target="_blank"
             rel="noreferrer"
             className="flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-surface-card hover:bg-surface-hover border border-surface-border text-xs font-mono text-cyan-300"
           >
             <ExternalLink className="w-3.5 h-3.5" />
-            <span>Open OpenAPI / Swagger Docs</span>
+            <span>Open API Health</span>
           </a>
         </div>
       </div>
