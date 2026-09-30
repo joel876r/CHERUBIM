@@ -1,0 +1,14 @@
+[build]
+  base = "frontend"
+  command = "npm ci --include=dev --no-audit --no-fund && npm run build"
+  publish = "dist"
+  functions = "../netlify/functions"
+
+[build.environment]
+  # TypeScript, Vite, and Tailwind are build-time devDependencies.
+  NPM_FLAGS = "--include=dev"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
